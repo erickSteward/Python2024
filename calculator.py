@@ -5,6 +5,12 @@ def button_click(value):
     display.insert(tk.END, current_text + str(value))
 def clear_display():
     display.delete(0, tk.END)
+def theme_selector(theme):
+    if theme == 'dark':
+        root.configure(bg = '#000000')
+        display.configure(bg = '#55555', fg = 'fffff')
+    elif theme =='light'#finalize from here now
+
 def calculate():
     # exception handling. this ensures that our program executes to the ens
     # and does not crash
