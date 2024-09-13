@@ -9,7 +9,9 @@ def theme_selector(theme):
     if theme == 'dark':
         root.configure(bg = '#000000')
         display.configure(bg = '#55555', fg = 'fffff')
-    elif theme =='light'#finalize from here now
+    elif theme =='light':#finalize from here now
+        root.configure(bg="#FFFFF")
+        display.configure(bg = "#33333", fg="00000")
 
 def calculate():
     # exception handling. this ensures that our program executes to the ens
@@ -35,10 +37,11 @@ root.configure(bg="#ADD8E6") #set background color of the window
 display = tk.Entry(root, font=("Arial", 24), borderwidth=5, relief="flat", justify="right")
 display.pack(pady=20, padx=20, fill="both")
 buttons = [
-    '7', '8', '9,' '/',
+    '7', '8', '9', '/',
     '4', '5', '6', '*',
     '1', '2', '3', '-',
-    '0', 'C', '=', '+'
+    '0', 'C', '=', '+',
+    'Theme'
 ]
 
 # create a new window over  the current window
@@ -52,7 +55,7 @@ for button in buttons:
     action = lambda x=button: button_click(x) if x != "=" and x!="C" else calculate() if x == "=" else clear_display()
     # defines an anonymous function (lambda fuction) with a default argument x set to button.
     # This lambda fuction is used to determine what action to take based on the value of x.
-    tk.Button(button_frame, text=button, width=9, height=3, bg="#79E5F2", command=action).grid(row, column=col, padx=5, pady=5)
+    tk.Button(button_frame, text=button, width=9, height=3, bg="#79E5F2", command=action).grid(row=row, column=col, padx=5, pady=5)
     col += 1
     if col > 3:
         col = 0
