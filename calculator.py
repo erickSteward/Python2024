@@ -3,15 +3,26 @@ def button_click(value):
     current_text = display.get() #tk.END refer to the position after the existing text
     display.delete(0, tk.END)
     display.insert(tk.END, current_text + str(value))
+
+
 def clear_display():
     display.delete(0, tk.END)
+
+    
 def theme_selector(theme):
     if theme == 'dark':
         root.configure(bg = '#000000')
         display.configure(bg = '#55555', fg = 'fffff')
     elif theme =='light':#finalize from here now
-        root.configure(bg="#FFFFF")
-        display.configure(bg = "#33333", fg="00000")
+        root.configure(bg="#ADD8E6")
+        display.configure(bg = "#ADD8E6", fg="00000")
+
+def toggle_theme():
+    current_theme = root.cget('bg')  # Get the current background color
+    if current_theme == '#ADD8E6':  # If it's light theme, switch to dark
+        theme_selector('dark')
+    else:
+        theme_selector('light')
 
 def calculate():
     # exception handling. this ensures that our program executes to the ens
@@ -52,9 +63,17 @@ row = 0
 col = 0
 
 for button in buttons:
-    action = lambda x=button: button_click(x) if x != "=" and x!="C" else calculate() if x == "=" else clear_display()
+    if button == "=":
+        action = calculate
+    elif button == "C":
+        action = clear_display
+    elif button == "Theme":
+        action = toggle_theme
+    else:
+        action = lambda x = button: button_click()
+
     # defines an anonymous function (lambda fuction) with a default argument x set to button.
-    # This lambda fuction is used to determine what action to take based on the value of x.
+    # This lambda function is used to determine what action to take based on the value of x.
     tk.Button(button_frame, text=button, width=9, height=3, bg="#79E5F2", command=action).grid(row=row, column=col, padx=5, pady=5)
     col += 1
     if col > 3:
