@@ -37,6 +37,21 @@ def calculate():
         display.insert(tk.END, "Error")
         
 
+# define a function to allow users to use the keyboard instead of clicking on the buttons
+def keyPress(event):
+    key = event.char # get the key pressed
+    if key in '1234567890+-*/': #If the key is a number or operator
+        button_click(key)
+    elif key == '\r':
+        calculate()
+    elif key == '\x1b':
+        clear_display()
+    elif key == '\x08':
+        current_text = display.get()
+        display.delete(0, tk.END)
+        display.insert(tk.END, current_text[:-1])
+        
+
 # Create the main window. you can call it anything, for instance main
 # The first window
 root = tk.Tk()
@@ -70,7 +85,7 @@ for button in buttons:
     elif button == "Theme":
         action = toggle_theme
     else:
-        action = lambda x = button: button_click()
+        action = lambda x = button: button_click(x)
 
     # defines an anonymous function (lambda fuction) with a default argument x set to button.
     # This lambda function is used to determine what action to take based on the value of x.
@@ -80,5 +95,9 @@ for button in buttons:
         col = 0
         row += 1
         
-# define a function to allow users to use the keyboard instead of clicking on the buttons
+        
+# Bind key presses to the key_press function
+root.bind("<Key>", keyPress)
+
+# start the tkinter main loop
 root.mainloop()
