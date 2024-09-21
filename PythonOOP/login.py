@@ -2,7 +2,9 @@
 # add the login, register and exit buttons
 
 import tkinter as tk
-
+from tkinter import messagebox
+from dbconnect import connect_db
+from registration import Error
 
 main_home = tk.Tk()
 main_home.title("Login Form")
@@ -12,7 +14,30 @@ main_home.resizable(False, False)
 # function to exit
 def exit():
     main_home.destroy()
+    
 
+def login():
+    username = userentry.get()
+    password = passwordentry.get()
+    
+    try:
+        # Setup connection to db
+        db = connect_db()
+        if db:
+            cursor = db.cursor()
+            cursor.execute('SELECT * FROM registration WHERE username = %s AND pass = %s', (username, password))
+            result = cursor.fetchone()
+            
+            if result:
+                messagebox.showinfo('Login success', 'Welcome {}'.format(username))
+            else:
+                messagebox.showerror('Login Failed', 'Invalid Username or password')
+    except Error as e:
+        messagebox.showerror('Database Error', f"Database Connection Failed!! {e}")
+    finally:
+        db.close()
+            
+        
 username = tk.Label(main_home, text="Please enter username and password to login")
 username.grid(row=0, column=0, columnspan=2)
 
@@ -29,7 +54,7 @@ password.grid(row=2, column=0)
 passwordentry = tk.Entry(main_home)
 passwordentry.grid(row=2, column=1)
 
-loginbutton = tk.Button(main_home, text="Login")
+loginbutton = tk.Button(main_home, text="Login",command=login)
 loginbutton.grid(row=3, column=1)
 
 register = tk.Button(main_home, text="Register")
