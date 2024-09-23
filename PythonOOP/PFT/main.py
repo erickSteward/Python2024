@@ -53,12 +53,35 @@ def show_report():
 app = tk.Tk()
 app.title("Personal Finance Tracker")
 
-# SET
+# Set the geometry size
+window_width = 400
+window_height = 400
+
+# Get the screen width and height
+screen_width = app.winfo_screenwidth()
+screen_height = app.winfo_screenheight()
+
+# calculate x and y coodinates for the TK root window
+x_cordinate = int((screen_width/2) - (window_width/2))
+y_cordinate = int((screen_height/2) - (window_height/2))
+
+# Set the geometry of the widow
+app.geometry(f"{window_width}x{window_height}+{x_cordinate}+{y_cordinate}")
+
+# Configure the grid layout
+app.columnconfigure(0, weight=1)
+app.rowconfigure(0, weight=1)
+
+frame = ttk.Frame(app, padding="10 10 10 10")
+frame.grid(row=0, column=0, sticky="NSEW")
+
+frame.columnconfigure(0, weight=1)
+frame.columnconfigure(1, weight=2)
 
 # Create and place widgets using grid
-tk.Label(app, text="Date:").grid(row=0, column=0, sticky=tk.E, padx=5, pady=5)
-entry_date = DateEntry(app, width=12, background='darkblue', foreground='white', borderwidth=2, year=2024)
-entry_date.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
+tk.Label(app, text="Date:").grid(row=0, column=0, padx=5, pady=5)
+entry_date = DateEntry(app, width=12, background='darkblue', foreground='white', year=2024)
+entry_date.grid(row=0, column=1, padx=0, pady=0)
 
 tk.Label(app, text="Type (Income/Expense):").grid(row=1, column=0, sticky=tk.E, padx=5, pady=5)
 entry_type = ttk.Combobox(app, values=["Income", "Expense"], state="readonly")
