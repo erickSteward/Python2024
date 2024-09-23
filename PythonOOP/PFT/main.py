@@ -1,4 +1,5 @@
 # main.py
+import datetime
 import tkinter as tk
 from tkinter import ttk, messagebox
 from tkcalendar import DateEntry
@@ -37,7 +38,7 @@ def add_transaction():
     clear_entries()
 
 def clear_entries():
-    entry_date.set_date('')
+    entry_date.set_date(datetime.date.today())  # Set to today's date
     entry_type.set('')
     entry_category.set('')
     entry_amount.delete(0, tk.END)
@@ -52,9 +53,7 @@ def show_report():
 app = tk.Tk()
 app.title("Personal Finance Tracker")
 
-# Configure the grid layout
-app.columnconfigure(0, weight=1)
-app.columnconfigure(1, weight=2)
+# SET
 
 # Create and place widgets using grid
 tk.Label(app, text="Date:").grid(row=0, column=0, sticky=tk.E, padx=5, pady=5)
