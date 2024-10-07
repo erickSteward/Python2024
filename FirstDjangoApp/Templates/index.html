@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}SMS-Home {% endblock %}
+
+{% block body %}
+
+    <h1>{{my_thing}}</h1>
+    {% for post in posts %}
+        {{post.text}}
+
+        hr
+    {% endfor %}
+{% endblock %}
